@@ -1,0 +1,983 @@
+/* Variables CSS pour une meilleure maintenance */
+:root {
+    --primary-color: #2563eb;
+    --secondary-color: #3b82f6;
+    --accent-color: #60a5fa;
+    --background-color: #f8fafc;
+    --text-color: #1e293b;
+    --border-radius: 12px;
+    --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    
+    /* Nouvelles variables pour l'animation de la grille */
+    --cell-bg: #ffffff;
+    --cell-border: #e2e8f0;
+    --cell-hover: #dbeafe;
+    --cell-selected: #93c5fd;
+}
+
+/* Thème sombre */
+[data-theme="dark"] {
+    --primary-color: #60a5fa;
+    --secondary-color: #3b82f6;
+    --accent-color: #2563eb;
+    --background-color: #1e293b;
+    --text-color: #f8fafc;
+    --cell-bg: #334155;
+    --cell-border: #475569;
+    --cell-hover: #1e40af;
+    --cell-selected: #3b82f6;
+}
+
+/* Styles de base */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #a5b4fc, #818cf8, #6366f1);
+    background-size: 400% 400%;
+    animation: gradient-animation 15s ease infinite;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.game-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    width: 95%;
+    max-width: 1200px;
+    display: grid;
+    gap: 2rem;
+}
+
+/* En-tête du jeu */
+.game-header {
+    text-align: center;
+}
+
+.game-header h1 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Panneau des scores */
+.score-panel {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.game-stats {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.game-stats > div {
+    background: var(--background-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    font-weight: 600;
+}
+
+/* Contrôles du jeu */
+.game-controls {
+    margin-bottom: 2rem;
+}
+
+.theme-form {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.select-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.select-wrapper label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+select {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    border: 2px solid var(--accent-color);
+    background-color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+select:hover {
+    border-color: var(--primary-color);
+}
+
+/* Styles améliorés pour les boutons */
+button {
+    width: 45px;  /* Légèrement plus grand */
+    height: 45px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Effet de survol amélioré */
+button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+button:active {
+    transform: translateY(1px);
+}
+
+/* Styles spécifiques pour chaque type de bouton */
+.help-btn {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: white;
+}
+
+.instructions-btn {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: white;
+}
+
+.progress-btn {
+    background: linear-gradient(135deg, #a78bfa, #8b5cf6);
+    color: white;
+}
+
+.pause-btn {
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: white;
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, #3b82f6, #2563eb);
+    color: white;
+}
+
+.secondary-btn {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: white;
+}
+
+/* Effet de ripple au clic */
+button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%);
+    background-repeat: no-repeat;
+    background-position: 50%;
+    transform: scale(10, 10);
+    opacity: 0;
+    transition: transform 0.5s, opacity 1s;
+}
+
+button:active::after {
+    transform: scale(0, 0);
+    opacity: 0.3;
+    transition: 0s;
+}
+
+/* Style amélioré pour les tooltips */
+button[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 120%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    animation: tooltipFadeIn 0.2s ease-out;
+}
+
+/* Flèche du tooltip */
+button[title]:hover::before {
+    content: '';
+    position: absolute;
+    bottom: 110%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-top-color: rgba(0, 0, 0, 0.8);
+    animation: tooltipFadeIn 0.2s ease-out;
+}
+
+@keyframes tooltipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Responsive design pour les boutons */
+@media (max-width: 768px) {
+    button {
+        width: 40px;
+        height: 40px;
+        font-size: 1.25rem;
+    }
+
+    .action-buttons {
+        gap: 0.5rem;
+    }
+}
+
+/* Animation pour le bouton pause */
+.pause-btn[data-paused="true"] {
+    background: linear-gradient(135deg, #f43f5e, #e11d48);
+}
+
+/* Zone de jeu */
+.game-area {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+}
+
+/* Grille de jeu */
+.game-grid {
+    background: white;
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    -webkit-context-menu: none;
+    -moz-context-menu: none;
+    -ms-context-menu: none;
+    context-menu: none;
+}
+
+.game-grid table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 4px;
+}
+
+.game-grid td {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-touch-callout: none;
+    -webkit-context-menu: none;
+    -moz-context-menu: none;
+    -ms-context-menu: none;
+    context-menu: none;
+    aspect-ratio: 1;
+    text-align: center;
+    background: var(--cell-bg);
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border: 2px solid var(--cell-border);
+}
+
+.game-grid td:hover {
+    background: var(--cell-hover);
+    color: white;
+    transform: scale(1.1);
+    border-color: var(--cell-selected);
+}
+
+.game-grid td.revealed {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Liste des mots */
+.word-list-container {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.word-list-container h2 {
+    color: var(--primary-color);
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+
+.word-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 0.5rem;
+}
+
+.word-list span {
+    padding: 0.5rem;
+    background: var(--background-color);
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.word-list span.found {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Messages et instructions */
+.game-messages {
+    margin-top: 2rem;
+}
+
+.message-box {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    padding: 1rem 2rem;
+    border-radius: var(--border-radius);
+    animation: slideDown 0.3s ease-out;
+}
+
+.message-success {
+    background: #10b981;
+    color: white;
+}
+
+.message-error {
+    background: #ef4444;
+    color: white;
+}
+
+.message-info {
+    background: var(--primary-color);
+    color: white;
+}
+
+@keyframes slideDown {
+    from { transform: translate(-50%, -100%); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.instructions {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+}
+
+.instructions h3 {
+    color: var(--primary-color);
+    margin-top: 0;
+}
+
+.instructions ul {
+    padding-left: 1.5rem;
+    margin: 0;
+}
+
+.instructions li {
+    margin-bottom: 0.5rem;
+}
+
+/* Boutons d'action */
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+/* Animations */
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Media Queries */
+@media (max-width: 1024px) {
+    .score-panel {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .game-stats {
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+
+    .action-buttons {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-stats {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .game-stats > div {
+        width: 100%;
+        text-align: center;
+    }
+
+    .action-buttons {
+        flex-wrap: wrap;
+    }
+
+    .action-buttons button {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    button {
+        width: 36px;
+        height: 36px;
+        font-size: 1.25rem;
+    }
+}
+
+/* Animations pour les éléments interactifs */
+@keyframes pop {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.revealed {
+    animation: pop 0.3s ease;
+}
+
+/* Style pour les mots trouvés */
+.word-found {
+    text-decoration: line-through;
+    color: var(--accent-color);
+    opacity: 0.7;
+}
+
+/* Ajouter ces styles à votre fichier CSS existant */
+
+.word-item {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    margin: 0.25rem;
+    background: var(--background-color);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.word-item.found {
+    background: var(--primary-color);
+    color: white;
+    text-decoration: line-through;
+}
+
+.placed {
+    font-weight: bold;
+}
+
+.selecting {
+    animation: selectPulse 1.5s infinite;
+}
+
+@keyframes selectPulse {
+    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+    50% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+}
+
+@media (max-width: 768px) {
+    .game-grid td {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem;
+    }
+}
+
+/* Ajouter ces nouveaux styles */
+.found-animation {
+    animation: foundCelebration 0.6s ease-out;
+}
+
+@keyframes foundCelebration {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2) rotate(10deg); }
+    75% { transform: scale(0.9) rotate(-5deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+/* Modifier les styles de la modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: flex-start; /* Aligner en haut */
+    align-items: center;
+    z-index: 1000;
+    padding-top: 2rem; /* Espace en haut */
+    overflow-y: auto; /* Permettre le défilement */
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    position: relative;
+    width: 90%;
+    max-width: 800px;
+    margin: 0 auto;
+    max-height: 90vh; /* Hauteur maximale */
+    overflow-y: auto; /* Défilement si nécessaire */
+}
+
+/* Style spécifique pour la modal de succès */
+.success-modal .modal-content {
+    max-width: 500px;
+}
+
+/* Style spécifique pour la modal de progression */
+.progress-modal .modal-content {
+    max-width: 800px;
+}
+
+/* Style spécifique pour la modal des instructions */
+.instructions-modal .modal-content {
+    max-width: 600px;
+}
+
+/* Style spécifique pour la modal des achievements */
+.achievement-modal .modal-content {
+    max-width: 400px;
+}
+
+/* Améliorer la lisibilité du contenu des modales */
+.modal-content h2 {
+    margin-bottom: 1.5rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+/* Style pour le bouton de fermeture */
+.close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.close-modal:hover {
+    opacity: 1;
+}
+
+/* Animation d'ouverture des modales */
+.modal[style*="display: block"] .modal-content {
+    animation: modalSlideDown 0.3s ease-out;
+}
+
+@keyframes modalSlideDown {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Ajuster pour le mode sombre */
+[data-theme="dark"] .modal-content {
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+/* Ajouter aux styles existants */
+.countdown {
+    background: var(--background-color);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    font-weight: 600;
+}
+
+.countdown.warning {
+    background: #fcd34d;
+    color: #92400e;
+    animation: pulse 1s infinite;
+}
+
+.countdown.danger {
+    background: #ef4444;
+    color: white;
+    animation: pulse 0.5s infinite;
+}
+
+.hidden {
+    display: none;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+/* Styles pour le système de progression */
+.progression-panel {
+    background: white;
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    margin-top: 2rem;
+}
+
+.rank-info {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.current-rank {
+    font-size: 2rem;
+    margin: 1rem 0;
+}
+
+.progress-bar {
+    background: var(--background-color);
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.progress {
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.achievement-card {
+    background: var(--background-color);
+    padding: 1rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.achievement-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.achievement-card.locked {
+    opacity: 0.5;
+    filter: grayscale(1);
+}
+
+.achievement-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-progress {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+.leaderboard-grid {
+    margin-top: 1rem;
+}
+
+.leaderboard-item {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+}
+
+.leaderboard-rank {
+    font-weight: bold;
+    margin-right: 1rem;
+    min-width: 30px;
+}
+
+.leaderboard-score {
+    margin-left: auto;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Modal des achievements */
+.achievement-modal .modal-content {
+    text-align: center;
+    max-width: 400px;
+}
+
+.achievement-details {
+    margin: 2rem 0;
+}
+
+.achievement-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: bounceIn 0.5s ease;
+}
+
+.achievement-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.achievement-reward {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Styles pour la modal de progression */
+.progress-modal .modal-content {
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.progress-content {
+    padding: 2rem;
+}
+
+.progress-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Ajuster les styles de la progression-panel pour la modal */
+.progression-panel {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    margin-top: 0;
+}
+
+/* Style pour les onglets de progression */
+.progress-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--background-color);
+    padding-bottom: 1rem;
+}
+
+.progress-tab {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    border-radius: var(--border-radius);
+    transition: all 0.3s ease;
+}
+
+.progress-tab.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Animation pour l'ouverture de la modal */
+.progress-modal .modal-content {
+    animation: slideUpFade 0.3s ease-out;
+}
+
+@keyframes slideUpFade {
+    from {
+        transform: translateY(50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Animation de transition pour le changement de thème */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Amélioration des animations de la grille */
+.game-grid td {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animation pour les mots trouvés */
+.found-animation {
+    animation: foundCelebration 0.6s ease-out;
+}
+
+@keyframes foundCelebration {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2) rotate(10deg); }
+    75% { transform: scale(0.9) rotate(-5deg); }
+    100% { transform: scale(1) rotate(0); }
+}
+
+/* Effet de confetti pour les succès */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: var(--primary-color);
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation: confettiFall 1s ease-out forwards;
+}
+
+@keyframes confettiFall {
+    0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Style du bouton de thème */
+.theme-btn {
+    background: linear-gradient(135deg, #fbbf24, #d97706);
+    color: white;
+}
+
+[data-theme="dark"] .theme-btn {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+}
+
+/* Styles pour la modal de succès */
+.success-modal .modal-content {
+    text-align: center;
+    max-width: 500px;
+    background: linear-gradient(135deg, #fff, #f0f9ff);
+}
+
+.success-modal h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.success-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.success-stats {
+    background: var(--background-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    font-size: 1.2rem;
+}
+
+.success-stats p {
+    margin: 0.5rem 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    background: white;
+    border-radius: 6px;
+}
+
+.success-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.success-buttons button {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+}
+
+/* Animation pour la modal de succès */
+.success-modal .modal-content {
+    animation: successPopIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes successPopIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

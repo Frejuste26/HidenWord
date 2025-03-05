@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu de Mots Cachés</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- En-tête du jeu -->
+        <header class="game-header">
+            <h1>🎮 Jeu de Mots Cachés</h1>
+            
+            <!-- Panneau des scores -->
+            <div class="score-panel">
+                <div class="game-stats">
+                    <div class="timer">⏱️ Temps: <span id="timer">00:00</span></div>
+                    <div class="score">🎯 Score: <span id="score">0</span></div>
+                    <div class="found-words">✨ Mots trouvés: <span id="found">0</span>/<span id="total">0</span></div>
+                    <div class="countdown hidden">⏳ Temps: <span id="countdown">03:00</span></div>
+                </div>
+                <div class="action-buttons">
+                    <button id="themeToggleBtn" class="theme-btn" title="Changer de thème">🌓</button>
+                    <button id="helpBtn" class="help-btn" title="Indice">💡</button>
+                    <button id="instructionsBtn" class="instructions-btn" title="Instructions">📖</button>
+                    <button id="progressBtn" class="progress-btn" title="Progression">🏆</button>
+                    <button id="pauseBtn" class="pause-btn" title="Pause">⏸️</button>
+                </div>
+            </div>
+
+            <!-- Formulaire de configuration -->
+            <div class="game-controls">
+                <div class="theme-form">
+                    <div class="select-wrapper">
+                        <label for="themes">Thème:</label>
+                        <select id="themes">
+                            <option value="programmation">💻 Programmation</option>
+                            <option value="frameworks">🔧 Frameworks</option>
+                            <option value="reseau">🌐 Réseau</option>
+                            <option value="securite">🔒 Sécurité</option>
+                            <option value="database">📊 Base de données</option>
+                            <option value="systeme">⚙️ Système</option>
+                            <option value="materiel">🔧 Matériel</option>
+                            <option value="logiciel">💾 Logiciel</option>
+                            <option value="web">🌍 Web</option>
+                            <option value="mobile">📱 Mobile</option>
+                        </select>
+                    </div>
+
+                    <div class="select-wrapper">
+                        <label for="levels">Niveau:</label>
+                        <select id="levels">
+                            <option value="4">🌱 Facile 4×4</option>
+                            <option value="6">🌿 Moyen 6×6</option>
+                            <option value="8">🌳 Difficile 8×8</option>
+                            <option value="10">🎯 Expert 10×10</option>
+                        </select>
+                    </div>
+
+                    <div class="select-wrapper">
+                        <label for="gameMode">Mode de jeu:</label>
+                        <select id="gameMode">
+                            <option value="classic">🎮 Classique</option>
+                            <option value="timeAttack">⏱️ Contre la montre</option>
+                            <option value="zen">🧘 Mode Zen</option>
+                            <option value="challenge">🏆 Challenge</option>
+                        </select>
+                    </div>
+
+                    <button id="startBtn" class="primary-btn" title="Commencer">🚀</button>
+                    <button id="resetBtn" class="secondary-btn" title="Réinitialiser">🔄</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Zone de jeu principale -->
+        <main class="game-area">
+            <!-- Grille de jeu -->
+            <div id="game-board" class="game-grid"></div>
+
+            <!-- Liste des mots à trouver -->
+            <aside class="word-list-container">
+                <h2>📝 Mots à trouver</h2>
+                <div id="word-list" class="word-list"></div>
+            </aside>
+        </main>
+
+        <!-- Messages et instructions -->
+        <section class="game-messages">
+            <div id="message" class="message-box"></div>
+        </section>
+
+        <!-- Déplacer la section progression dans une nouvelle modal -->
+        <div id="progressModal" class="modal progress-modal">
+            <div class="modal-content progress-content">
+                <span class="close-modal">&times;</span>
+                <h2>🏆 Progression du Joueur</h2>
+                <div class="progression-panel">
+                    <div class="rank-info">
+                        <h3>Niveau Joueur</h3>
+                        <div class="current-rank">
+                            <span id="rankIcon">🌱</span>
+                            <span id="rankName">Débutant</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="rankProgress" class="progress"></div>
+                        </div>
+                        <div class="next-rank">Prochain rang: <span id="nextRank">Apprenti</span></div>
+                    </div>
+
+                    <div class="achievements-container">
+                        <h3>Achievements</h3>
+                        <div id="achievements-list" class="achievements-grid"></div>
+                    </div>
+
+                    <div class="leaderboard">
+                        <h3>Classement</h3>
+                        <div id="leaderboard-list" class="leaderboard-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ajouter la modal des instructions -->
+    <div id="instructionsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>📝 Comment jouer</h2>
+            <div class="instructions-content">
+                <h3>Règles du jeu</h3>
+                <ul>
+                    <li>Trouvez les mots cachés dans la grille</li>
+                    <li>Les mots peuvent être :</li>
+                    <ul>
+                        <li>➡️ Horizontaux (gauche à droite)</li>
+                        <li>⬇️ Verticaux (haut en bas)</li>
+                        <li>↘️ Diagonaux (dans les deux sens)</li>
+                    </ul>
+                    <li>Cliquez et faites glisser pour sélectionner les lettres</li>
+                    <li>Trouvez tous les mots pour passer au niveau suivant</li>
+                </ul>
+                <h3>Astuces</h3>
+                <ul>
+                    <li>Utilisez le bouton 'Indice' si vous êtes bloqué</li>
+                    <li>Le score augmente avec la longueur des mots trouvés</li>
+                    <li>Gagnez un bonus de temps en finissant rapidement</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ajouter une modal pour les achievements débloqués -->
+    <div id="achievementModal" class="modal achievement-modal">
+        <div class="modal-content achievement-content">
+            <h2>🎉 Achievement Débloqué !</h2>
+            <div class="achievement-details">
+                <div id="achievementIcon" class="achievement-icon"></div>
+                <div id="achievementTitle" class="achievement-title"></div>
+                <div id="achievementReward" class="achievement-reward"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ajouter la modal de succès -->
+    <div id="successModal" class="modal success-modal">
+        <div class="modal-content success-content">
+            <h2>🎉 Niveau Terminé !</h2>
+            <div class="success-details">
+                <div class="success-stats">
+                    <p>Score: <span id="finalScore">0</span></p>
+                    <p>Temps: <span id="finalTime">00:00</span></p>
+                    <p>Mots trouvés: <span id="finalWords">0/0</span></p>
+                </div>
+                <div class="success-buttons">
+                    <button id="nextLevelBtn" class="primary-btn" title="Niveau Suivant">⏭️</button>
+                    <button id="replayLevelBtn" class="secondary-btn" title="Rejouer">🔄</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+</body>
+</html>
